@@ -6,6 +6,7 @@ import Login from './components/Login'
 import { useDispatch, useSelector } from 'react-redux'
 import { auth } from './actions/user'
 import Explorer from './components/exploler/Explorer'
+import UserProfile from './components/profile/UserProfile'
 
 const Layout = () => {
 	const isAuth = useSelector(state => state.user.isAuth)
@@ -28,6 +29,7 @@ const Layout = () => {
 					:
 					<Switch>
 						<Route exact path={'/'} component={Explorer} />
+						<Route exact path={'/profile'} component={UserProfile} />
 						<Redirect to={'/'} />
 					</Switch>
 				}

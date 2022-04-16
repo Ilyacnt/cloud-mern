@@ -1,10 +1,12 @@
 export const SET_USER = 'SET_USER'
 export const LOGOUT = 'LOGOUT'
+export const SET_USER_DROPDOWN = 'SET_USER_DROPDOWN'
 
 
 const initialState = {
     currentUser: {},
-    isAuth: false
+    isAuth: false,
+    showUserDropdown: false
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -14,9 +16,10 @@ export const userReducer = (state = initialState, action) => {
         case LOGOUT:
             localStorage.removeItem('token')
             return {...state, currentUser: {}, isAuth: false}
+        case SET_USER_DROPDOWN:
+            return {...state, showUserDropdown: action.payload}
             
-            
-    
+   
         default:
             return state
     }
