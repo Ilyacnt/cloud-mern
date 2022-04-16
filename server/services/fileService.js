@@ -38,6 +38,10 @@ class FileService {
     getPath(file) {
         return path.resolve(__dirname, '../files') + path.sep + file.user + path.sep + file.path
     }
+
+    getStaticPath(file) {
+        return path.resolve(__dirname, '../static') + path.sep + file
+    }
 }
 
 module.exports = new FileService()

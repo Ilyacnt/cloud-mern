@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const User = require('../models/User')
 const File = require('../models/File')
+const uuid = require('uuid')
 
 class FileController {
 
@@ -124,6 +125,37 @@ class FileController {
         } catch (error) {
             console.log(error)
             res.status(500).json({message: 'Ошибка при удалении файла с сервера, папка не пуста'})
+        }
+    }
+
+    async uploadAvatar(req, res) {
+        try {
+            const file = req.files.file
+            // Сюда нужно прикрутить валидацию файла, так как пользователь может отправить файл не того формата
+            const user = await User.findById(req.user.id)
+            const avatarName = uuid.v4() + '.jpg'
+            file.mv(fileService.getStaticPath(avatarName))
+            user.avatar = avatarName
+            await user.save()
+            return res.json({message: 'Аватар был успешно загружен', user})
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({message: 'Ошибка при добавлении аватара'})
+        }
+    }
+
+    async deleteAvatar(req, res) {
+        try {
+            const user = await User.findById(req.user.id)
+
+            fs.unlinkSync(fileService.getStaticPath(user.avatar))
+
+            user.avatar = null
+            await user.save()
+            return res.json({message: 'Аватар был успешно удален', user})
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({message: 'Ошибка при удалении аватара'})
         }
     }
 }
