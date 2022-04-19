@@ -6,9 +6,6 @@ class FileService {
 
     createDir(file) {
         const filePath = path.resolve(__dirname, '../files') + path.sep + file.user + path.sep + file.path
-        // console.log(filePath)
-        // console.log(file.path)
-
 
         return new Promise((resolve, reject) => {
             try {

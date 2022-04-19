@@ -1,19 +1,17 @@
-const fileService = require('../services/fileService')
 const fs = require('fs')
 const path = require('path')
+const uuid = require('uuid')
 const User = require('../models/User')
 const File = require('../models/File')
-const uuid = require('uuid')
+const fileService = require('../services/fileService')
+
 
 class FileController {
-
     async createDir(req, res) {
         try {
             const {name, type, parent} = req.body
             const file = new File({name, type, parent, user: req.user.id})
-
             const parentFile = await File.findById(parent)
-            console.log('HERE:', parentFile);
             if(!parentFile) {
                 file.path = name
                 await fileService.createDir(file)
@@ -25,7 +23,6 @@ class FileController {
             }
             await file.save()
             return res.json(file)
-
         } catch (error) {
             console.log(error)
             return res.status(500).json(error)
@@ -46,36 +43,26 @@ class FileController {
         try {
             const file = req.files.file
             const parent = await File.findOne({user: req.user.id, _id: req.body.parent})
-
             const user = await User.findById(req.user.id)
-
             if (user.usedSpace + file.size > user.diskSpace) {
                 return res.status(507).json({message: 'Недостаточно места на диске'})
             }
-
             user.usedSpace = user.usedSpace + file.size
-
             let filePath
             if (parent) {
                 filePath = path.resolve(__dirname, '../files') + path.sep + user._id + path.sep + parent.path + path.sep + file.name
             } else {
                 filePath = path.resolve(__dirname, '../files') + path.sep + user._id + path.sep + file.name
             }
-
             if (fs.existsSync(filePath)) {
                 return res.status(500).json({ message: 'Такой файл уже существует на диске'})
             }
-
             file.mv(filePath)
-
             const type = file.name.split('.').pop()
-
             let pathForDbFile = file.name
             if (parent) {
                 pathForDbFile = parent.path + path.sep + file.name
             }
-
-
             const dbFile = new File({
                 name: file.name,
                 type,
@@ -84,12 +71,9 @@ class FileController {
                 parent: parent?._id,
                 user: user._id
             })
-            
             await dbFile.save()
             await user.save()
-
             return res.json(dbFile)
-
         } catch (error) {
             console.log(error)
             res.status(500).json({message: 'Ошибка при загрузке файла на сервер'})
@@ -100,12 +84,10 @@ class FileController {
         try {
             const file = await File.findOne({_id: req.query.id, user: req.user.id})
             const filePath = path.resolve(__dirname, '../files') + path.sep + req.user.id + path.sep + file.path // + path.sep + file.name
-
             if (fs.existsSync(filePath)) {
                 return res.download(filePath, file.name)
             }
             return res.status(404).json({message: 'Файл не найден на сервере'})
-
         } catch (error) {
             console.log(error)
             res.status(500).json({message: 'Ошибка при загрузке файла с сервера'})
@@ -121,7 +103,6 @@ class FileController {
             fileService.deleteFile(file)
             await file.remove()
             return res.json({message: 'Файл успешно удален'})
-
         } catch (error) {
             console.log(error)
             res.status(500).json({message: 'Ошибка при удалении файла с сервера, папка не пуста'})
@@ -147,9 +128,7 @@ class FileController {
     async deleteAvatar(req, res) {
         try {
             const user = await User.findById(req.user.id)
-
             fs.unlinkSync(fileService.getStaticPath(user.avatar))
-
             user.avatar = null
             await user.save()
             return res.json({message: 'Аватар был успешно удален', user})
@@ -159,5 +138,6 @@ class FileController {
         }
     }
 }
+
 
 module.exports = new FileController()
