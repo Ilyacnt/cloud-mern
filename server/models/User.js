@@ -5,7 +5,7 @@ const User = new Schema({
     password: {type: String, required: true},
     firstName: {type: String},
     lastName: {type: String},
-    diskSpace: {type: Number, default: 1024**3*3},
+    plan: {type: ObjectId, ref: 'Plan'},
     usedSpace: {type: Number, default: 0},
     avatar: {type: String},
     files: [{type: ObjectId, ref: 'File'}]

@@ -44,6 +44,7 @@ const UserProfile = () => {
                 <p>Имя: <b>{currentUser.firstName + ' ' + currentUser.lastName}</b></p>
                 <p>Электронная почта: <b>{currentUser.email}</b></p>
                 <div className={classes.disk_info}>
+                    <p>Тарифный план: <b style={{color: currentUser.planTitle === 'Premium' ? 'orange' : 'black'}}>{currentUser.planTitle}</b></p>
                     <p>Объем диска: <b>{formatFileSize(currentUser.diskSpace)}</b></p>
                     <p>Использованное пространство: <b>{formatFileSize(currentUser.usedSpace)}</b></p>
                     <div className={classes.progress_wrap}>

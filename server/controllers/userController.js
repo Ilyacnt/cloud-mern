@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const {validationResult} = require('express-validator')
 const User = require('../models/User')
 const File = require('../models/File')
+const Plan = require('../models/Plan')
 const fileService = require('../services/fileService')
 
 
@@ -15,16 +16,21 @@ class UserController {
             if (!errors.isEmpty()) {
                 return res.status(400).json({message: "Ошибка валидации", errors})
             }
-            const {email, firstName, lastName, password} = req.body
+            const {email, firstName, lastName, password, planTitle} = req.body
             const candidate = await User.findOne({email})
             if (candidate) {
                 return res.status(400).json({message: 'Такой пользователь уже существует'})
             }
+
+
+        
+            const plan = new Plan({title: planTitle, diskSpace: (planTitle === 'Basic' ? 1024**3*3 : 1024**3*10)})
+            await plan.save()
             const hashPassword = await bcrypt.hash(password, 4)
-            const user = new User({email, firstName, lastName, password: hashPassword})
+            const user = new User({email, firstName, lastName, password: hashPassword, plan})
             await user.save()
             await fileService.createDir(new File({user: user.id, name: ''}))
-            return res.json({message: 'Пользователь был создан', user})
+            return res.json({message: 'Пользователь был создан', user, plan})
         } catch (error) {
             console.log(error)
             res.send({message: 'Что-то пошло не так'})
@@ -38,6 +44,7 @@ class UserController {
             if (!user) {
                 return res.status(400).json({message: 'Такого пользователя не существует'})
             }
+            const plan = await Plan.findById(user.plan)
             const isPassValid = await bcrypt.compare(password, user.password)
             if (!isPassValid) {
                 return res.status(400).json({message: 'Неверный пароль'})
@@ -50,9 +57,10 @@ class UserController {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    diskSpace: user.diskSpace,
+                    diskSpace: plan.diskSpace,
                     usedSpace: user.usedSpace,
-                    avatarUrl: user.avatar
+                    planTitle: plan.title,
+                    avatarUrl: user.avatar,
                 }
             })
         } catch (error) {
@@ -64,6 +72,7 @@ class UserController {
     async auth(req, res) {
         try {
             const user = await User.findOne({_id: req.user.id})
+            const plan = await Plan.findById(user.plan)
             const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: config.get('tokenExpiresIn')})
             res.json({
                 token,
@@ -72,8 +81,9 @@ class UserController {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    diskSpace: user.diskSpace,
+                    diskSpace: plan.diskSpace,
                     usedSpace: user.usedSpace,
+                    planTitle: plan.title,
                     avatarUrl: user.avatar
                 }
             })

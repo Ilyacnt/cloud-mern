@@ -4,6 +4,7 @@ const uuid = require('uuid')
 const User = require('../models/User')
 const File = require('../models/File')
 const fileService = require('../services/fileService')
+const Plan = require('../models/Plan')
 
 
 class FileController {
@@ -44,7 +45,8 @@ class FileController {
             const file = req.files.file
             const parent = await File.findOne({user: req.user.id, _id: req.body.parent})
             const user = await User.findById(req.user.id)
-            if (user.usedSpace + file.size > user.diskSpace) {
+            const plan = await Plan.findById(user.plan)
+            if (user.usedSpace + file.size > plan.diskSpace) {
                 return res.status(507).json({message: 'Недостаточно места на диске'})
             }
             let filePath
@@ -71,6 +73,8 @@ class FileController {
                 user: user._id
             })
             await dbFile.save()
+            
+
             user.usedSpace = user.usedSpace + file.size
             await user.save()
             return res.json(dbFile)

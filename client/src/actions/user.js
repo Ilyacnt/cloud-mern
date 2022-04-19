@@ -2,13 +2,14 @@ import axios from 'axios'
 import env from "react-dotenv"
 import {setUser} from '../reducers/action_creators/userActionCreators'
 
-export const registration = async (email, firstName, lastName, password) => {
+export const registration = async (email, firstName, lastName, password, planTitle) => {
     try {
         const response = await axios.post(env.DB_URL + '/api/auth/registration', {
             email,
             firstName,
             lastName,
-            password
+            password,
+            planTitle
         })
         .then(response => console.log(response.data.message))
     } catch (error) {

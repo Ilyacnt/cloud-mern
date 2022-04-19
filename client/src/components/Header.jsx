@@ -14,10 +14,10 @@ const Header = () => {
 
 
 	useEffect(() => {
-        const handleUserDropdownClick = () => { dispatch(setUserDropDown(false)) }
-        window.addEventListener('click', handleUserDropdownClick)
-        return () => window.removeEventListener('click', handleUserDropdownClick)
-    }, [])
+		const handleUserDropdownClick = () => { dispatch(setUserDropDown(false)) }
+		window.addEventListener('click', handleUserDropdownClick)
+		return () => window.removeEventListener('click', handleUserDropdownClick)
+	}, [])
 
 	const dropDownHandler = e => {
 		e.stopPropagation()
@@ -27,7 +27,14 @@ const Header = () => {
 	return (
 		<div className="header">
 			<div className="header-container">
-				<NavLink to="/" className="header-link"><p className="header-logo">Cloud.<span className="header-logo-span">Хранилище</span></p></NavLink>
+				<NavLink to="/" className="header-link">
+					<p className="header-logo">Cloud.
+						<span className="header-logo-span">
+							Хранилище
+						</span>
+						{currentUser.planTitle === 'Premium' && (<span className='header-logo-premium'> PREMIUM</span>)}
+					</p>
+				</NavLink>
 				<div className="header-group">
 					{!isAuth &&
 						<>
@@ -36,7 +43,7 @@ const Header = () => {
 						</>
 
 					}
-					{isAuth && 
+					{isAuth &&
 						<div className="header-user" onClick={dropDownHandler}>
 							<ArrowDownSVG className="header-user-arrow" />
 							<p>{currentUser.email}</p>
