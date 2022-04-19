@@ -47,7 +47,6 @@ class FileController {
             if (user.usedSpace + file.size > user.diskSpace) {
                 return res.status(507).json({message: 'Недостаточно места на диске'})
             }
-            user.usedSpace = user.usedSpace + file.size
             let filePath
             if (parent) {
                 filePath = path.resolve(__dirname, '../files') + path.sep + user._id + path.sep + parent.path + path.sep + file.name
@@ -72,6 +71,7 @@ class FileController {
                 user: user._id
             })
             await dbFile.save()
+            user.usedSpace = user.usedSpace + file.size
             await user.save()
             return res.json(dbFile)
         } catch (error) {
@@ -97,10 +97,13 @@ class FileController {
     async deleteFile(req, res) {
         try {
             const file = await File.findOne({_id: req.query.id, user: req.user.id})
+            const user = await User.findById(req.user.id)
+            user.usedSpace = user.usedSpace - file.size
             if (!file) {
                 return res.status(404).json({message: 'Файл не найден на сервере'})
             }
             fileService.deleteFile(file)
+            await user.save()
             await file.remove()
             return res.json({message: 'Файл успешно удален'})
         } catch (error) {

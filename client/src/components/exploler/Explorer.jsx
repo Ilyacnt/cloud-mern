@@ -35,7 +35,6 @@ const Explorer = () => {
 		if (e.target.className === 'explorer-body') {
 			e.stopPropagation()
 			e.preventDefault()
-			// console.log('Mouse enter to: ', e.target)
 			setDragEnter(true)
 		}
 	}
@@ -50,7 +49,6 @@ const Explorer = () => {
 		if (e.target.className === 'drag-area unselectable') {
 			e.stopPropagation()
 			e.preventDefault()
-			// console.log('Mouse leave from: ', e.target)
 			setDragEnter(false)
 		}
 	}
@@ -60,7 +58,6 @@ const Explorer = () => {
 		e.preventDefault()
 		let files = [...e.dataTransfer.files]
 		files.forEach(file => dispatch(uploadFile(file, currentDir)))
-
 		setDragEnter(false)
 	}
 
