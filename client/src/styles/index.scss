@@ -254,7 +254,7 @@ body {
                 font-weight: 300;
                 font-size: 1.1em;
                 cursor: pointer;
-                border: 1px dashed #171717;
+                border: 1px dashed var(--black);
                 box-sizing: border-box;
 
                 &:hover {
