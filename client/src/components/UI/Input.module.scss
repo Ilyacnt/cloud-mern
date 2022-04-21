@@ -1,16 +1,14 @@
-$blue: #3464DF;
+@import '../../styles/colors.scss';
 
 .input {
     padding: 8px 20px;
     font-size: 1.25em;
     font-family: 'Rubik';
     font-weight: 300;
-    border: 1px solid #CDCDCD;
+    border: 1px solid $inputBorderColor;
     box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
-
     outline:$blue;
-
     transition: transform 0.2s;
 }
 
@@ -18,7 +16,5 @@ $blue: #3464DF;
     outline-color: $blue;
     outline-style: solid;
     outline-width: 2px;
-
-    // outline-offset: -3px;
     transform: scale(1.01);
 }

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Input from './UI/Input'
+import Loader from './UI/Loader'
 import { registration } from '../actions/user'
-import { auth } from '../actions/user'
 
 const Registration = () => {
     const dispatch = useDispatch()
@@ -17,11 +17,7 @@ const Registration = () => {
         dispatch(registration(email, firstName, lastName, password, planTitle))
     }
 
-    if (isLoading) {
-        return <>
-            ЗАГРУЗКА
-        </>
-    }
+    if (isLoading) return <Loader/>
 
 
     return (

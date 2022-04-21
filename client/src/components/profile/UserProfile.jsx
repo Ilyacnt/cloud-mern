@@ -30,7 +30,7 @@ const UserProfile = () => {
                     <p className={classes.email}>{currentUser.firstName}</p>
                     <img src={avatar} alt='user avatar' />
                 </div>
-                <button className="btn-default" onClick={() => dispatch(logoutUser())}>Выйти из профиля</button>
+                <button className="btn-default" onClick={() => dispatch(logoutUser())}>Выйти из аккаунта</button>
             </div>
             <div className={classes.body}>
                 <div className={classes.btnsgroup}>

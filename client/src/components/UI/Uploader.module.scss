@@ -1,4 +1,4 @@
-$blue: #3464DF;
+@import '../../styles//colors.scss';
 
 .uploader {
     background: white;
@@ -6,13 +6,10 @@ $blue: #3464DF;
     padding: 30px 25px 15px 25px;
     border-radius: 8px;
     width: 350px;
-    // min-height: 150px;
     height: 350px;
-    // max-height: 300px;
     position: fixed;
     bottom: 50px;
     right: 50px;
-    // cursor: move;
 }
 
 .head {
@@ -45,7 +42,7 @@ $blue: #3464DF;
     }
 
     &::-webkit-scrollbar-track {
-        background-color: lightgray;
+        background-color: $scrollbarBackgroundColor;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -77,6 +74,6 @@ $blue: #3464DF;
         font-style: normal;
         font-weight: 500;
         text-align: center;
-        color: #7c371a;
+        color: $placeholderTextColor;
     }
 }

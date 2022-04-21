@@ -1,4 +1,4 @@
-$blue: #3464DF;
+@import '../../styles/colors.scss';
 
 
 .item {
@@ -29,7 +29,7 @@ $blue: #3464DF;
 .progressbar {
     display: flex;
     height: 20px;
-    background: lightgray;
+    background: $progressbarBackgroundColor;
     border-radius: 8px;
 
     &_scale {
@@ -41,7 +41,7 @@ $blue: #3464DF;
         padding: 0 5px;
     }
     &_percent {
-        color: white;
+        color: $white;
         // mix-blend-mode: multiply;
     }
 }
