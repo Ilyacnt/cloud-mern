@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 @import './reset.scss';
-@import './media.scss';
 @import './colors.scss';
 
 
@@ -96,7 +95,7 @@ body {
             }
         }
         &-premium {
-            color: orange;
+            color: $premiumPlanColor;
             font-size: .5em;
         }
     }
@@ -135,7 +134,7 @@ body {
             flex-direction: column;
             gap: 5px;
             padding: 10px 0;
-            background: white;
+            background: $white;
             width: 200px;
             position: absolute;
             left: -15px;
@@ -147,7 +146,7 @@ body {
                 width: 100%;
             }
             .btn-logout:hover, .btn-logout:active {
-                color: crimson;
+                color: $buttonsDangerColor;
             }
         }
 
@@ -156,13 +155,11 @@ body {
 
 
 .grayzone {
-    // border: 3px solid rgb(60, 255, 0);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    // border: 3px solid red;
 }
 
 .window {
@@ -194,7 +191,8 @@ body {
 .registration-select {
     // height: 42px;
     box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
-    border: 1px solid #CDCDCD;
+    border: 1px solid $inputBorderColor;
+    background: $white;
     border-radius: 15px;
     font-family: 'Rubik';
     font-weight: 500;
@@ -209,8 +207,6 @@ body {
     min-height: 80%;
 
     &-header {
-
-        // pointer-events: none;
         display: flex;
         align-items: center;
         padding: 0 30px;
@@ -393,23 +389,19 @@ body {
 
 
 .drag-area {
-    // position: absolute;
-
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     width: inherit;
-    // height: 200px;
-    background: #EDF2FF;
-    border: 2px dashed #3464DF;
+    background: $dragAreaBackgroundColor;
+    border: 2px dashed $blue;
     box-sizing: border-box;
     border-radius: 16px;
-
-
     color: $blue;
     text-align: center;
     font-weight: 300;
     font-size: 1.7em;
-
 }
+
+@import './media.scss';

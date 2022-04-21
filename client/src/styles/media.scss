@@ -1,41 +1,136 @@
-/* 
- ##Device = Desktops
- ##Screen = 1281px to higher resolution desktops
-*/
-@media (min-width: 1281px) {
+@media (min-width: 1921px) {
+    .header {
+        display: flex;
+        justify-content: center;
+
+        &-container {
+            margin: 0;
+            width: 70%;
+        }
+    }
+
+    .explorer {
+        width: 70%;
+    }
 }
 
-/* 
-##Device = Laptops, Desktops
-##Screen = B/w 1025px to 1280px
-*/
-@media (min-width: 1025px) and (max-width: 1280px) {
+@media (min-width: 1481px) and (max-width: 1920px) {
+    .header {
+        &-container {
+            margin: 0 90px;
+        }
+    }
+
+    .explorer {
+        width: 70%;
+    }
 }
 
-/* 
-##Device = Tablets, iPads (portrait)
-##Screen = B/w 768px to 1024px
-*/
-@media (min-width: 768px) and (max-width: 1024px)  and (orientation: portrait) {
+
+@media (min-width: 1225px) and (max-width: 1480px) {
+    .explorer {
+        width: 80%;
+    }
 }
 
-/* 
-##Device = Tablets, iPads (Landscape)
-##Screen = B/w 768px to 1024px
-*/
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+@media (min-width: 768px) and (max-width: 1224px) {
+    .explorer {
+        width: 90%;
+    }
 }
 
-/* 
-##Device = Low Resolution Tablets, Mobiles (Landscape)
-##Screen = B/w 481px to 767px
-*/
-@media (min-width: 481px) and (max-width: 767px) {
+
+@media (min-width: 531px) and (max-width: 767px) {
+    .explorer {
+        width: 98%;
+    }
 }
 
-/*
-##Device = Most of the Smartphones Mobiles (Portrait)
-##Screen = B/w 320px to 479px
-*/
-@media (min-width: 320px) and (max-width: 480px) {
+
+@media (max-width: 530px) {
+    .header {
+        &-container {
+            margin: 0 10px;
+        }
+    }
+
+    .explorer {
+        width: 100%;
+
+        &-header {
+            padding: 20px 15px;
+            flex-direction: column;
+            gap: 15px;
+
+            &-title {
+                font-size: 1.8em;
+            }
+
+
+            &-group {
+                margin: 0;
+                gap: 15px;
+
+                &__btns {
+                    gap: 5px;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+
+    .registration,
+    .login {
+        font-size: 1em;
+        padding: 15px 10px 15px 10px;
+        min-width: 130px;
+        margin-top: initial;
+
+        &-btn {
+            font-size: 1.1em;
+        }
+    }
+
+    .registration-header {
+        font-weight: 500;
+        font-size: 1.6em;
+    }
+
+
+
+}
+
+@media (max-width: 439px) {
+
+    .header {
+        height: initial;
+        padding: 5px 0;
+
+        &-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 3px;
+        }
+
+        &-user {
+            font-size: 1.1em;
+        }
+    }
+
+    .explorer {
+        &-header {
+            &-group {
+                margin: 0;
+                gap: 15px;
+                flex-direction: column;
+
+            }
+
+
+        }
+
+    }
+
 }
