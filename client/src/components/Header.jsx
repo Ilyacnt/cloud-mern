@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, setUserDropDown } from '../reducers/action_creators/userActionCreators'
 import { ReactComponent as ArrowDownSVG } from '../assets/chevron-down-sharp.svg'
+import { ReactComponent as ArrowDownSVG_dark } from '../assets/chevron-down-sharp_dark.svg'
 import AvatarPlaceholderIMG from '../assets/avatar-placeholder.png'
+import { ThemeContext, themes } from './theme/ThemeContext'
 
 const Header = () => {
 	const showUserDropdown = useSelector(state => state.user.showUserDropdown)
@@ -45,7 +47,11 @@ const Header = () => {
 					}
 					{isAuth &&
 						<div className="header-user" onClick={dropDownHandler}>
-							<ArrowDownSVG className="header-user-arrow" />
+							<ThemeContext.Consumer>
+								{({ theme }) => (
+									theme === themes.light ? <ArrowDownSVG className="header-user-arrow" /> : <ArrowDownSVG_dark className="header-user-arrow" />
+								)}
+							</ThemeContext.Consumer>
 							<p>{currentUser.email}</p>
 							<img src={currentUser.avatarUrl ? `${env.DB_URL}/${currentUser.avatarUrl}` : AvatarPlaceholderIMG} alt='user avatar' />
 							{showUserDropdown && <div className="header-user-dropdown">

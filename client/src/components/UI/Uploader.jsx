@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import classes from './Uploader.module.scss'
 import { ReactComponent as CloseSVG } from '../../assets/close-circle-outline.svg'
+import { ReactComponent as CloseSVG_dark } from '../../assets/close-circle-outline_dark.svg'
 import UploaderFile from './UploaderFile'
 import { useSelector, useDispatch } from 'react-redux'
 import { hideUploader } from '../../reducers/action_creators/uploadActionCreators'
 import animeGif from '../../assets/miracle-nikki-phone.gif'
+import { ThemeContext, themes } from '../theme/ThemeContext'
 
 const Uploader = () => {
     const [isMouseDown, setIsMouseDown] = useState(false)
@@ -42,13 +44,21 @@ const Uploader = () => {
         <div
             style={stylesDrag}
             className={classes.uploader}
-            // onMouseDown={e => startDrag(e)}
-            // onMouseMove={e => mouseMove(e)}
-            // onMouseUp={e => mouseUp(e)}
+        // onMouseDown={e => startDrag(e)}
+        // onMouseMove={e => mouseMove(e)}
+        // onMouseUp={e => mouseUp(e)}
         >
             <div className={classes.head}>
                 <p>Загрузки</p>
-                <CloseSVG className={classes.close} onClick={() => dispatch(hideUploader())} />
+                <ThemeContext.Consumer>
+                    {({ theme }) => (
+                        theme === themes.light 
+                        ?
+                        <CloseSVG className={classes.close} onClick={() => dispatch(hideUploader())} />
+                        :
+                        <CloseSVG_dark className={classes.close} onClick={() => dispatch(hideUploader())} />
+                    )}
+                </ThemeContext.Consumer>
             </div>
             <div className={classes.body}>
                 {files.length > 0 ? files.map(file => (

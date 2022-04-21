@@ -16,19 +16,52 @@
 // $premiumPlanColor: orange;
 
 
-$blue: #3464DF;
-$darkblue: #163DA1;
-$black: #171717;
-$white: white;
-$gray: #F4F4F4;
-$darkgray: gray;
+:root[data-theme="light"] {
+    --blue: #3464DF;
+    --darkblue: #163DA1;
+    --black: #171717;
+    --white: white;
+    --gray: #F4F4F4;
+    --darkgray: gray;
+    --shadowColor: rgba(0, 0, 0, 0.25);
+    --darkShadow: rgba(0, 0, 0, 0.25);
+    --filesHoverShadow: rgba(30, 43, 54, 0.25);
+    --popUpBackground: rgba(61, 61, 61, 0.2);
 
-$placeholderTextColor: #7c371a;
-$inputBorderColor: #CDCDCD;
+    --placeholderTextColor: #7c371a;
+    --inputBorderColor: #CDCDCD;
 
-$scrollbarBackgroundColor: lightgray;
-$progressbarBackgroundColor: lightgray;
-$buttonsDangerColor: crimson;
+    --contextMenuShadow: rgba(0, 0, 0, 0.2);
 
-$dragAreaBackgroundColor: #EDF2FF;
-$premiumPlanColor: orange;
+    --scrollbarBackgroundColor: lightgray;
+    --progressbarBackgroundColor: lightgray;
+    --buttonsDangerColor: crimson;
+
+    --dragAreaBackgroundColor: #EDF2FF;
+    --premiumPlanColor: orange;
+}
+
+:root[data-theme="dark"] {
+    --blue: #527adf;
+    --darkblue: #2b59ce;
+    --black: #fdfdfd;
+    --white: rgb(58, 58, 58);
+    --gray: #464646;
+    --darkgray: gray;
+    --shadowColor: rgba(240, 240, 240, 0.25);
+    --darkShadow: rgba(0, 0, 0, 0.3);
+    --filesHoverShadow: rgba(240, 240, 240, 0.25);
+    --popUpBackground: rgba(158, 158, 158, 0.2);
+
+    --placeholderTextColor: #dac4bb;
+    --inputBorderColor: #CDCDCD;
+
+    --contextMenuShadow: rgba(243, 243, 243, 0.1);
+
+    --scrollbarBackgroundColor: lightgray;
+    --progressbarBackgroundColor: lightgray;
+    --buttonsDangerColor: rgb(224, 73, 104);
+
+    --dragAreaBackgroundColor: #36415a;
+    --premiumPlanColor: orange;
+}

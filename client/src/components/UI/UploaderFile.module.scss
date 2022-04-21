@@ -8,7 +8,7 @@
     flex-direction: column;
     padding: 9px;
     border-radius: 8px;
-
+    cursor: grabbing;
 
     &:hover {
         box-shadow: 0px 0px 4px rgba(30, 43, 54, 0.25);
@@ -18,7 +18,8 @@
 .item_head {
     display: flex;
     justify-content: space-between;
-    color: $blue;
+    color: var(--blue);
+
 
     .close {
         width: 16px;
@@ -29,19 +30,19 @@
 .progressbar {
     display: flex;
     height: 20px;
-    background: $progressbarBackgroundColor;
+    background: var(--progressbarBackgroundColor);
     border-radius: 8px;
 
     &_scale {
         height: inherit;
         border-radius: 8px;
-        background: $blue;
+        background: var(--blue);
         display: flex;
         align-items: center;
         padding: 0 5px;
     }
     &_percent {
-        color: $white;
+        color: var(--white);
         // mix-blend-mode: multiply;
     }
 }

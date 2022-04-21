@@ -7,6 +7,7 @@ import { logoutUser } from '../../reducers/action_creators/userActionCreators'
 import formatFileSize from '../../utils/formatFileSize'
 import calculateProgressBarPercent from '../../utils/calculateProgressBarPercent'
 import { deleteAvatar, uploadAvatar } from '../../actions/user'
+import { ThemeContext, themes } from '../theme/ThemeContext'
 
 
 const UserProfile = () => {
@@ -39,6 +40,17 @@ const UserProfile = () => {
                         <input accept="image/*" type="file" id={classes.upload_input} multiple={true} onChange={e => changeHandler(e)} />
                     </div>
                     <button className="btn-default" onClick={() => dispatch(deleteAvatar())}>Удалить аватар</button>
+                    <ThemeContext.Consumer>
+                        {({ theme, setTheme }) => (
+                            <button className="btn-default" onClick={() => {
+                                if (theme === themes.light) setTheme(themes.dark)
+                                if (theme === themes.dark) setTheme(themes.light)
+                            }}
+                            >
+                                Сменить тему
+                            </button>
+                        )}
+                    </ThemeContext.Consumer>
                 </div>
 
                 <p>Имя: <b>{currentUser.firstName + ' ' + currentUser.lastName}</b></p>

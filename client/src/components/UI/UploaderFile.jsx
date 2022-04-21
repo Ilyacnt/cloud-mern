@@ -8,10 +8,10 @@ const UploaderFile = ({ file }) => {
     const dispatch = useDispatch()
 
     return (
-        <div className={classes.item}>
+        <div className={classes.item} onClick={() => dispatch(removeUploadFile(file))} >
             <div className={classes.item_head}>
                 <p>{file.name}</p>
-                <CloseSVG className={classes.close} onClick={() => dispatch(removeUploadFile(file))} />
+                {/* <CloseSVG className={classes.close} onClick={() => dispatch(removeUploadFile(file))} /> */}
             </div>
             <div className={classes.progressbar}>
                 <div style={{width: `${file.progress}%`}} className={classes.progressbar_scale}>
