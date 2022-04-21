@@ -6,6 +6,7 @@ const User = require('../models/User')
 const File = require('../models/File')
 const Plan = require('../models/Plan')
 const fileService = require('../services/fileService')
+const userService = require('../services/userService')
 
 
 
@@ -21,19 +22,18 @@ class UserController {
             if (candidate) {
                 return res.status(400).json({message: 'Такой пользователь уже существует'})
             }
-
-
         
             const plan = new Plan({title: planTitle, diskSpace: (planTitle === 'Basic' ? 1024**3*3 : 1024**3*10)})
             await plan.save()
             const hashPassword = await bcrypt.hash(password, 4)
             const user = new User({email, firstName, lastName, password: hashPassword, plan})
             await user.save()
+            const token = userService.generateUserToken(user)
             await fileService.createDir(new File({user: user.id, name: ''}))
-            return res.json({message: 'Пользователь был создан', user, plan})
+            return res.json({message: 'Пользователь был создан', user, plan, token}).status(201)
         } catch (error) {
             console.log(error)
-            res.send({message: 'Что-то пошло не так'})
+            res.send({message: 'Что-то пошло не так'}).status(500)
         }
     }
 
@@ -49,7 +49,7 @@ class UserController {
             if (!isPassValid) {
                 return res.status(400).json({message: 'Неверный пароль'})
             }
-            const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: config.get('tokenExpiresIn')})
+            const token = userService.generateUserToken(user)
             res.json({
                 token,
                 user: {
@@ -60,7 +60,7 @@ class UserController {
                     diskSpace: plan.diskSpace,
                     usedSpace: user.usedSpace,
                     planTitle: plan.title,
-                    avatarUrl: user.avatar,
+                    avatarUrl: user.avatar
                 }
             })
         } catch (error) {
@@ -73,7 +73,7 @@ class UserController {
         try {
             const user = await User.findOne({_id: req.user.id})
             const plan = await Plan.findById(user.plan)
-            const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: config.get('tokenExpiresIn')})
+            const token = userService.generateUserToken(user)
             res.json({
                 token,
                 user: {

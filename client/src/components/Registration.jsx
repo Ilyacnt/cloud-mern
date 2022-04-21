@@ -1,13 +1,27 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Input from './UI/Input'
 import { registration } from '../actions/user'
+import { auth } from '../actions/user'
 
 const Registration = () => {
+    const dispatch = useDispatch()
+    const { isLoading, isError } = useSelector(state => state.user)
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
     const [planTitle, setPlanTitle] = useState('Basic')
+
+    const handlerRegistration = () => {
+        dispatch(registration(email, firstName, lastName, password, planTitle))
+    }
+
+    if (isLoading) {
+        return <>
+            ЗАГРУЗКА
+        </>
+    }
 
 
     return (
@@ -22,7 +36,7 @@ const Registration = () => {
                 <option>Basic</option>
                 <option>Premium</option>
             </select>
-            <button className="btn-default registration-btn" onClick={() => registration(email, firstName, lastName, password, planTitle)}>Зарегистрироваться</button>
+            <button className="btn-default registration-btn" onClick={handlerRegistration}>Зарегистрироваться</button>
         </div>
     )
 }
